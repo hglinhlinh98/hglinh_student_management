@@ -1,4 +1,7 @@
 var User = require("../models/user.model");
+var config = require("../config/auth.config");
+var md5 = require('md5');
+var jwt = require('jsonwebtoken');
 
 const CALLBACK_ERR = { success: false, message: "Error!", data: undefined };
 
@@ -14,10 +17,12 @@ exports.create = async (req, res) => {
       NameOrEmail.length >= 4 &&
       Password.length >= 6
     ) {
+      const hashPassword = md5(Password);
       const u = new User({
         NameOrEmail,
-        Password,
+        Password: hashPassword,
       });
+      console.log(`user:`, u);
       u.save().then(() => {
         res.send({ success: true, message: "Tạo user thành công!" });
       });
@@ -39,13 +44,18 @@ exports.getUSers = (req, res) => {
 
 exports.loginUser = (req, res) => {
   const { NameOrEmail, Password } = req.body;
-  User.findOne({ NameOrEmail, Password }, function (err, data) {
+  // console.log('name: ',NameOrEmail, 'Pass: ',Password);
+  const hashPassword = md5(Password);
+  User.findOne({ NameOrEmail, Password: hashPassword }, function (err, data) {
     if (err) {
-      res.send(CALLBACK_ERR);
+      res.send(CALLBACK_ERR);    
       return;
     }
     if (data) {
-      res.send({ success: true, message: "Đăng nhập thành công.", data });
+      const token = jwt.sign({ name: NameOrEmail }, config.secret, {
+        expiresIn: 86400 // 24hours
+      })
+      res.send({ success: true, message: "Đăng nhập thành công.", data,token });
     } else {
       res.send(CALLBACK_ERR);
     }

@@ -194,9 +194,11 @@ class Home extends Component {
 		})
 			.then((res) => res.json()) 
 			.then((res) => {
-				console.log(`res:`, res);
+				// console.log(`res:`, res);
 				switch (res.success) {
 					case true:
+						localStorage.setItem("Token",
+						"Bearer " + res.token);
 						localStorage.setItem("Name", NameOrEmail);
 						localStorage.setItem("Password", Password);
 						this.props.history.push("/students");

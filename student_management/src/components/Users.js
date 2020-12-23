@@ -2,7 +2,7 @@
 
 import React, { Component } from "react";
 import { Table } from "reactstrap";
-import { Button } from "reactstrap";
+//import { Button } from "reactstrap";
 import "../App.css";
 
 class Users extends Component {
@@ -11,18 +11,19 @@ class Users extends Component {
 		this.state = {
 			userlist: [],
 		};
-
+        const myToken = localStorage.getItem("Token");
 		fetch("http://localhost:8080/api/users", {
 			method: "get",
 			headers: {
+				"Authorization": myToken,
 				Accept: "application/json",
 				"Content-Type": "application/json",
 			},
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				console.log(`get users:`, res);
-				console.log(": ", res.data);
+				//console.log(`get users:`, res);
+				console.log("res.data: ", res.data);
 				this.setState({
 					userlist: [...res.data],
 				});
@@ -51,14 +52,6 @@ class Users extends Component {
 							<tbody>
 								<tr>
 									<td>{u.NameOrEmail}</td>
-									{/* <td>
-										<Button
-											outline
-											color='success'
-											className='btnupdateUser'>
-											Edit
-										</Button>
-									</td> */}
 								</tr>
 							</tbody>
 						))}

@@ -19,15 +19,17 @@ mongoose.connect(
 app.use(bodyParser.json());
 // parser requests of content-type application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
+
 app.use(userRoute);
 app.use(studentRoute);
-
-app.options("*", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type"); // Add other headers here
-  res.setHeader("Access-Control-Allow-Methods", "POST"); // Add other methods here
-  res.send();
-});
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

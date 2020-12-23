@@ -7,6 +7,7 @@ exports.createStudent = (req, res) => {
   if (
     /^[a-zA-Z]/.test(Fullname) &&
     Fullname.length >= 5 &&
+    /^[0-9/]*\d$/.test(DateOfBirth) &&
     DateOfBirth.length >= 6 &&
     Class.length == 2
   ) {

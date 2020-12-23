@@ -127,7 +127,6 @@ class Signup extends Component {
 			.then((res) => res.json())
 			.then((res) => {
 				// check message, error, show dialog ...
-				console.log(`res:`, res);
 				switch (res.success) {
 					case true:
 						localStorage.setItem("Name", NameOrEmail);
@@ -135,7 +134,7 @@ class Signup extends Component {
 						this.props.history.push("/");
 						break;
 					case false:
-						alert("Invalid account!");
+						alert("Invalid account or Account already exists!");
 						break;
 				}
 			});

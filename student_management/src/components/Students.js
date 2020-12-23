@@ -107,8 +107,7 @@ class Students extends Component {
 			.then((res) => res.json()) //convert to json
 			.then((res) => {
 				// check message, error, show dialog ...
-				console.log(`get users:`, res);
-				console.log("res.data: ", res.data);
+
 				this.setState({
 					studentlist: [...res.data],
 				});
