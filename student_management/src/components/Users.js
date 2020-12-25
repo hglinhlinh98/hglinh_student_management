@@ -11,7 +11,8 @@ class Users extends Component {
 		this.state = {
 			userlist: [],
 		};
-        const myToken = localStorage.getItem("Token");
+		const myToken = localStorage.getItem("Token");
+		console.log('myToken,', myToken);
 		fetch("http://localhost:8080/api/users", {
 			method: "get",
 			headers: {
@@ -22,7 +23,7 @@ class Users extends Component {
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				//console.log(`get users:`, res);
+				console.log(`the res:`, res);
 				console.log("res.data: ", res.data);
 				this.setState({
 					userlist: [...res.data],

@@ -197,8 +197,7 @@ class Home extends Component {
 				// console.log(`res:`, res);
 				switch (res.success) {
 					case true:
-						localStorage.setItem("Token",
-						"Bearer " + res.token);
+						localStorage.setItem("Token",res.token);
 						localStorage.setItem("Name", NameOrEmail);
 						localStorage.setItem("Password", Password);
 						this.props.history.push("/students");
